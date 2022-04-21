@@ -52,11 +52,20 @@ int	ft_atoi(const char *str)
 
 //*****************************************************************************
 
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
 void	check_is_digit(char *str)
 {
 	int	j;
 
 	j = 0;
+	if (str[j] == '-' || str[j] == '+')
+			j++;
 	while (ft_isdigit(str[j]) && str[j] != '\0')
 		j++;
 	if (ft_isdigit(str[j]) == 0 && str[j] != '\0')
