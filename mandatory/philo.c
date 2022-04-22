@@ -12,74 +12,7 @@
 
 #include "philo.h"
 
-//*****************************************************************************
-
-void	*routine(void *info)
-{
-	t_info	result;
-
-	result = *(t_info *)info;
-	take_forks(result.tmp);
-	// printf("hello from thread %d\n", result.tmp->index);
-	// eat(info);
-	put_forks(result.tmp);
-	// sleep_(info);
-	// think();
-	return (NULL);
-}
-
-//*****************************************************************************
-
-void	join_and_destroy(t_info *info)
-{
-	info->tmp = info->heade;
-	while (info->tmp)
-	{
-		if (pthread_join(info->tmp->th, NULL) != 0)
-			exit(1);
-		info->tmp = info->tmp->next;
-	}
-	info->tmp = info->heade;
-	while (info->tmp)
-	{
-		pthread_mutex_destroy(&info->tmp->mutex);
-		info->tmp = info->tmp->next;
-	}
-}
-
-//*****************************************************************************
-
-void	initial_mutex(t_info *info)
-{
-	info->tmp = info->heade;
-	while (info->tmp)
-	{
-		pthread_mutex_init(&info->tmp->mutex, NULL);
-		info->tmp = info->tmp->next;
-	}
-}
-
-//*****************************************************************************
-
-void	creat_thread(t_info *info)
-{
-	initial_mutex(info);
-	info->tmp = info->heade;
-	while (info->tmp)
-	{
-		if (pthread_create(&info->tmp->th, NULL, &routine, &info) != 0)
-		{
-			write(2, "failed to create thread\n", 24);
-			exit(1);
-		}
-		info->tmp = info->tmp->next;
-	}
-	join_and_destroy(info);
-}
-
-//*****************************************************************************
-
-void	check_arg(int ac, char **av)
+static void	check_arg(int ac, char **av)
 {
 	int	i;
 
@@ -98,7 +31,7 @@ void	check_arg(int ac, char **av)
 
 //*****************************************************************************
 
-void	initial_data(t_philo *philo, t_info *info, char **av, int ac)
+static void	initial_data(t_info *info, char **av, int ac)
 {
 	info->nmb_of_thread = ft_atoi(av[1]);
 	info->time_to_die = ft_atoi(av[2]);
@@ -108,60 +41,60 @@ void	initial_data(t_philo *philo, t_info *info, char **av, int ac)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
 	else
 		info->nmb_of_time_eat = 0;
-	philo->tmp = info->heade;
-	philo->i = 0;
-	while (philo->tmp)
+	info->tmp = info->heade;
+	info->i = 0;
+	while (info->tmp)
 	{
-		philo->tmp->nmb_of_eat = 0;
-		philo->tmp = philo->tmp->next;
+		info->tmp->nmb_of_eat = 0;
+		info->tmp = info->tmp->next;
 	}
 }
 
 //*****************************************************************************
 
-void	creat_list(t_info *info, t_philo *philo, char **av)
+static void	creat_list(t_info *info, char **av)
 {
-	philo->i = 0;
-	while (philo->i < ft_atoi(av[1]))
+	info->i = 0;
+	while (info->i < ft_atoi(av[1]))
 	{
-		philo->thread = (t_node *)malloc(sizeof(t_node));
-		if (!philo->thread)
+		info->node = (t_node *)malloc(sizeof(t_node));
+		if (!info->node)
 			exit(1);
-		if (philo->i == 0)
+		if (info->i == 0)
 		{
-			philo->thread->next = NULL;
-			philo->thread->prev = NULL;
-			philo->thread->index = philo->i;
-			info->heade = philo->thread;
-			philo->tmp = info->heade;
+			info->node->next = NULL;
+			info->node->prev = NULL;
+			info->node->index = info->i;
+			info->heade = info->node;
+			info->tmp = info->heade;
 		}
 		else
 		{
-			philo->tmp->next = philo->thread;
-			philo->thread->prev = philo->tmp;
-			philo->thread->next = NULL;
-			philo->thread->index = philo->i;
-			philo->tmp = philo->tmp->next;
+			info->tmp->next = info->node;
+			info->node->prev = info->tmp;
+			info->node->next = NULL;
+			info->node->index = info->i;
+			info->tmp = info->tmp->next;
 		}
-		philo->i++;
+		info->i++;
 	}
-	info->tail = philo->thread;
+	info->tail = info->node;
 }
 
 //*****************************************************************************
 
 void	print_list(t_info info)
 {
-	info.tmp = info.heade;
+	info.node = info.heade;
 	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
  nb_of_t_eat = %d\n", \
 		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
 		info.time_to_sleep, info.nmb_of_time_eat);
-	while (info.tmp)
+	while (info.node)
 	{
 		printf("thread %d | nmb_of_eat = %d\n", \
-			info.tmp->index, info.tmp->nmb_of_eat);
-		info.tmp = info.tmp->next;
+			info.node->index, info.node->nmb_of_eat);
+		info.node = info.node->next;
 	}
 }
 
@@ -170,20 +103,16 @@ void	print_list(t_info info)
 int	main(int ac, char *av[])
 {
 	t_info	info;
-	t_philo philo;
 
-	if (ac == 6 || ac == 5)
-	{
-		check_arg(ac, av);
-		creat_list(&info, &philo, av);
-		initial_data(&philo, &info, av, ac);
-		creat_thread(&info);
-		// print_list(info);
-	}
-	else
+	if (ac > 6 || ac < 5)
 	{
 		write(2, "error\n", 6);
 		exit(1);
 	}
+	check_arg(ac, av);
+	creat_list(&info, av);
+	initial_data(&info, av, ac);
+	creat_thread(&info);
+	// print_list(info);
 	return (0);
 }

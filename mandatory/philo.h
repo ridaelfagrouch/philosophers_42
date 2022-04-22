@@ -6,9 +6,12 @@
 # include <stdlib.h>
 # include <pthread.h>
 
+enum e_fork{ off, on};
+
 typedef struct philo_node
 {
 	pthread_t			th;
+	enum e_fork			fork_statu;
 	pthread_mutex_t		mutex;
 	int					index;
 	int					nmb_of_eat;
@@ -16,18 +19,13 @@ typedef struct philo_node
 	struct philo_node	*prev;
 }	t_node;
 
-typedef struct philo_info
-{
-	int				i;
-	t_node			*tmp;
-	t_node			*thread;
-}	t_philo;
-
 typedef struct info
 {
 	t_node	*heade;
 	t_node	*tail;
+	t_node	*node;
 	t_node	*tmp;
+	int		i;
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
@@ -37,9 +35,7 @@ typedef struct info
 
 int		ft_atoi(const char *str);
 void	check_is_digit(char *str);
-void	take_forks(t_node *node);
-void	put_forks(t_node *node);
-void	eat(t_node *node);
-void	sleep_(t_node *node);
+size_t	ft_strlen(const char *str);
+void	creat_thread(t_info *info);
 
 #endif

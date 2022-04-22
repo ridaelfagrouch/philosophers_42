@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   atoi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rel-fagr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 14:55:05 by rel-fagr          #+#    #+#             */
-/*   Updated: 2022/04/20 14:55:08 by rel-fagr         ###   ########.fr       */
+/*   Created: 2022/04/22 11:44:05 by rel-fagr          #+#    #+#             */
+/*   Updated: 2022/04/22 11:44:08 by rel-fagr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo.h"
 
-void	wite_space(const char *str, unsigned int *i)
+static void	wite_space(const char *str, long int *i)
 {
+	*i = 0;
 	while ((str[*i] == ' ') || (str[*i] == '\r')
 		|| (str[*i] == '\n') || (str[*i] == '\t')
 		|| (str[*i] == '\v') || (str[*i] == '\f'))
@@ -23,14 +23,49 @@ void	wite_space(const char *str, unsigned int *i)
 	}
 }
 
+static int	len_str(const char *str)
+{
+	int	len;
+
+	len = 0;
+	if (ft_strlen(str) == 1 && (str[0] == '-' || str[0] == '+'))
+	{
+		write(2, "error: invalid arg!!\n", 21);
+		exit (1);
+	}
+	if (str[0] == '-' || str[0] == '+')
+		str++;
+	while (*str == '0')
+		str++;
+	while (str[len])
+		len++;
+	if (len > 10)
+		return (1);
+	else
+		return (0);
+}
+
+static void	error_(int sign, long int k, const char *str)
+{
+	if ((sign * k) > 2147483647 || (sign * k) < -2147483648)
+	{
+		write(2, "error: invalid arg!!\n", 21);
+		exit (1);
+	}
+	if (len_str(str))
+	{
+		write(2, "error: invalid nember!!\n", 24);
+		exit (1);
+	}
+}
+
 int	ft_atoi(const char *str)
 {
-	char			*src;
-	unsigned int	i;
-	int				sign;
-	int				k;
+	char		*src;
+	int			sign;
+	long int	k;
+	long int	i;
 
-	i = 0;
 	sign = 1;
 	k = 0;
 	src = (char *) str;
@@ -47,30 +82,6 @@ int	ft_atoi(const char *str)
 		k = k * 10 + src[i] - '0';
 		i++;
 	}
+	error_(sign, k, str);
 	return (sign * k);
-}
-
-//*****************************************************************************
-
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-void	check_is_digit(char *str)
-{
-	int	j;
-
-	j = 0;
-	if (str[j] == '-' || str[j] == '+')
-			j++;
-	while (ft_isdigit(str[j]) && str[j] != '\0')
-		j++;
-	if (ft_isdigit(str[j]) == 0 && str[j] != '\0')
-	{
-		write(2, "error!\n", 7);
-		exit(1);
-	}
 }
