@@ -12,22 +12,71 @@
 
 #include "philo.h"
 
-void	take_forks(t_node *node)
+void	take_forks(t_info	*info)
 {
-	pthread_mutex_lock(&node->mutex);
-	// printf("thread %d has taken a fork\n", info->philo->i);
+	info->tmp = info->node;
+	if (info->node == info->heade)
+	{
+		info->tmp = info->tmp->next;
+		info->tmp1 = info->tail;
+	}
+	else if (info->node == info->tail)
+	{
+		info->tmp = info->node->prev;
+		info->tmp1 = info->heade;
+	}
+	else
+	{
+		info->tmp = info->node->prev;
+		info->tmp1 = info->node->next;
+	}
+	if (info->tmp->fork_statu == off && info->tmp1->fork_statu == off)
+	{
+		pthread_mutex_lock(&info->tmp->mutex);
+		printf("thread %d has take left fork\n", info->node->index);
+		pthread_mutex_lock(&info->tmp1->mutex);
+		printf("thread %d has take right fork\n", info->node->index);
+		info->node->fork_number += 2;
+		info->tmp->fork_statu = on;
+		info->tmp1->fork_statu = on;
+	}
 }
 
-void	put_forks(t_node *node)
+void	put_forks(t_info *info)
 {
-	pthread_mutex_unlock(&node->mutex);
+	info->tmp = info->node;
+	if (info->node == info->heade)
+	{
+		info->tmp = info->tmp->next;
+		info->tmp1 = info->tail;
+	}
+	else if (info->node == info->tail)
+	{
+		info->tmp = info->node->prev;
+		info->tmp1 = info->heade;
+	}
+	else
+	{
+		info->tmp = info->node->prev;
+		info->tmp1 = info->node->next;
+	}
+	if (info->tmp->fork_statu == on && info->tmp1->fork_statu == on)
+	{
+		pthread_mutex_unlock(&info->tmp->mutex);
+		printf("thread %d has put left fork\n", info->node->index);
+		pthread_mutex_unlock(&info->tmp1->mutex);
+		printf("thread %d has put right fork\n", info->node->index);
+		info->node->fork_number -= 2;
+		info->tmp->fork_statu = off;
+		info->tmp1->fork_statu = off;
+	}
 }
 
-// void	eat(t_node *node)
-// {
-// 	sleep(info->philo->time_to_eat);
-// 	printf("thread %d is eating\n", info->philo->i);
-// }
+void	eat(t_info *info)
+{
+	sleep(info->time_to_eat);
+	printf("thread %d is eating\n", info->node->index);
+}
 
 // void	sleep_(t_node *node)
 // {

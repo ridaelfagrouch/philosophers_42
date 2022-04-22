@@ -6,12 +6,14 @@
 # include <stdlib.h>
 # include <pthread.h>
 
-enum e_fork{ off, on};
+enum e_fork{off, on};
 
 typedef struct philo_node
 {
-	pthread_t			th;
+	pthread_t			thread;
 	enum e_fork			fork_statu;
+	int					fork_number;
+	int					last_meal;
 	pthread_mutex_t		mutex;
 	int					index;
 	int					nmb_of_eat;
@@ -25,6 +27,7 @@ typedef struct info
 	t_node	*tail;
 	t_node	*node;
 	t_node	*tmp;
+	t_node	*tmp1;
 	int		i;
 	int		time_to_die;
 	int		time_to_eat;
@@ -37,5 +40,7 @@ int		ft_atoi(const char *str);
 void	check_is_digit(char *str);
 size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info);
+void	take_forks(t_info *info);
+void	put_forks(t_info *info);
 
 #endif

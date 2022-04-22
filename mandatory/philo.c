@@ -52,6 +52,18 @@ static void	initial_data(t_info *info, char **av, int ac)
 
 //*****************************************************************************
 
+void	first_node_data(t_info *info)
+{
+	info->node->next = NULL;
+	info->node->prev = NULL;
+	info->node->index = info->i;
+	info->node->fork_statu = off;
+	info->node->fork_number = 0;
+	info->node->last_meal = 0;
+	info->heade = info->node;
+	info->tmp = info->heade;
+}
+
 static void	creat_list(t_info *info, char **av)
 {
 	info->i = 0;
@@ -61,19 +73,16 @@ static void	creat_list(t_info *info, char **av)
 		if (!info->node)
 			exit(1);
 		if (info->i == 0)
-		{
-			info->node->next = NULL;
-			info->node->prev = NULL;
-			info->node->index = info->i;
-			info->heade = info->node;
-			info->tmp = info->heade;
-		}
+			first_node_data(info);
 		else
 		{
 			info->tmp->next = info->node;
 			info->node->prev = info->tmp;
 			info->node->next = NULL;
 			info->node->index = info->i;
+			info->node->fork_statu = off;
+			info->node->fork_number = 0;
+			info->node->last_meal = 0;
 			info->tmp = info->tmp->next;
 		}
 		info->i++;
@@ -83,20 +92,20 @@ static void	creat_list(t_info *info, char **av)
 
 //*****************************************************************************
 
-void	print_list(t_info info)
-{
-	info.node = info.heade;
-	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
- nb_of_t_eat = %d\n", \
-		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
-		info.time_to_sleep, info.nmb_of_time_eat);
-	while (info.node)
-	{
-		printf("thread %d | nmb_of_eat = %d\n", \
-			info.node->index, info.node->nmb_of_eat);
-		info.node = info.node->next;
-	}
-}
+// void	print_list(t_info info)
+// {
+// 	info.node = info.heade;
+// 	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
+//  nb_of_t_eat = %d\n", \
+// 		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
+// 		info.time_to_sleep, info.nmb_of_time_eat);
+// 	while (info.node)
+// 	{
+// 		printf("thread %d | nmb_of_eat = %d\n", \
+// 			info.node->index, info.node->nmb_of_eat);
+// 		info.node = info.node->next;
+// 	}
+// }
 
 //*****************************************************************************
 
