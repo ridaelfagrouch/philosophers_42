@@ -18,13 +18,7 @@ static void	*routine(void *info)
 
 	result = (t_info *)info;
 	while (1)
-	{
-		take_forks(&result);
-		eat(info);
-		put_forks(&result);
-		sleep_(info);
-		think();
-	}
+		start_routine(result);
 	return (NULL);
 }
 
@@ -66,6 +60,7 @@ void	creat_thread(t_info *info)
 			write(2, "failed to create thread\n", 24);
 			exit(1);
 		}
+		usleep(420);
 		info->node = info->node->next;
 	}
 	join_(info);

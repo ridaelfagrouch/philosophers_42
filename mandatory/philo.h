@@ -12,9 +12,9 @@ typedef struct philo_node
 {
 	pthread_t			thread;
 	enum e_fork			fork_statu;
-	int					fork_number;
 	int					last_meal;
 	pthread_mutex_t		mutex;
+	pthread_mutex_t		mutex_eat;
 	int					index;
 	int					nmb_of_eat;
 	struct philo_node	*next;
@@ -27,7 +27,6 @@ typedef struct info
 	t_node	*tail;
 	t_node	*node;
 	t_node	*tmp;
-	t_node	*tmp1;
 	int		i;
 	int		time_to_die;
 	int		time_to_eat;
@@ -40,7 +39,6 @@ int		ft_atoi(const char *str);
 void	check_is_digit(char *str);
 size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info);
-void	take_forks(t_info *info);
-void	put_forks(t_info *info);
+void	start_routine(t_info *info);
 
 #endif

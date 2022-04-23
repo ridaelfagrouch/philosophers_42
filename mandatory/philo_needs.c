@@ -12,74 +12,29 @@
 
 #include "philo.h"
 
-void	take_forks(t_info	*info)
+void	start_routine(t_info *info)
 {
-	info->tmp = info->node;
 	if (info->node == info->heade)
-	{
-		info->tmp = info->tmp->next;
-		info->tmp1 = info->tail;
-	}
-	else if (info->node == info->tail)
-	{
-		info->tmp = info->node->prev;
-		info->tmp1 = info->heade;
-	}
+		info->tmp = info->tail;
 	else
-	{
 		info->tmp = info->node->prev;
-		info->tmp1 = info->node->next;
-	}
-	if (info->tmp->fork_statu == off && info->tmp1->fork_statu == off)
+	if (info->tmp->fork_statu == off && info->node->fork_statu == off)
 	{
+		pthread_mutex_lock(&info->node->mutex);
 		pthread_mutex_lock(&info->tmp->mutex);
-		printf("thread %d has take left fork\n", info->node->index);
-		pthread_mutex_lock(&info->tmp1->mutex);
-		printf("thread %d has take right fork\n", info->node->index);
-		info->node->fork_number += 2;
+		info->node->fork_statu = on;
 		info->tmp->fork_statu = on;
-		info->tmp1->fork_statu = on;
-	}
-}
-
-void	put_forks(t_info *info)
-{
-	info->tmp = info->node;
-	if (info->node == info->heade)
-	{
-		info->tmp = info->tmp->next;
-		info->tmp1 = info->tail;
-	}
-	else if (info->node == info->tail)
-	{
-		info->tmp = info->node->prev;
-		info->tmp1 = info->heade;
-	}
-	else
-	{
-		info->tmp = info->node->prev;
-		info->tmp1 = info->node->next;
-	}
-	if (info->tmp->fork_statu == on && info->tmp1->fork_statu == on)
-	{
-		pthread_mutex_unlock(&info->tmp->mutex);
+		printf("thread %d has take left fork\n", info->node->index);
+		printf("thread %d has take right fork\n", info->node->index);
+		printf("thread %d is eating\n", info->node->index);
+		usleep(200);
 		printf("thread %d has put left fork\n", info->node->index);
-		pthread_mutex_unlock(&info->tmp1->mutex);
 		printf("thread %d has put right fork\n", info->node->index);
-		info->node->fork_number -= 2;
+		info->node->fork_statu = off;
 		info->tmp->fork_statu = off;
-		info->tmp1->fork_statu = off;
+		printf("thread %d is sleeping\n", info->node->index);
+		printf("thread %d is think\n", info->node->index);
+		pthread_mutex_unlock(&info->node->mutex);
+		pthread_mutex_unlock(&info->tmp->mutex);
 	}
 }
-
-void	eat(t_info *info)
-{
-	sleep(info->time_to_eat);
-	printf("thread %d is eating\n", info->node->index);
-}
-
-// void	sleep_(t_node *node)
-// {
-// 	sleep(info->philo->time_to_sleep);
-// 	printf("thread %d is sleeping\n", info->philo->i);
-// }

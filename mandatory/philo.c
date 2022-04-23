@@ -58,7 +58,6 @@ void	first_node_data(t_info *info)
 	info->node->prev = NULL;
 	info->node->index = info->i;
 	info->node->fork_statu = off;
-	info->node->fork_number = 0;
 	info->node->last_meal = 0;
 	info->heade = info->node;
 	info->tmp = info->heade;
@@ -81,7 +80,6 @@ static void	creat_list(t_info *info, char **av)
 			info->node->next = NULL;
 			info->node->index = info->i;
 			info->node->fork_statu = off;
-			info->node->fork_number = 0;
 			info->node->last_meal = 0;
 			info->tmp = info->tmp->next;
 		}
@@ -101,8 +99,8 @@ static void	creat_list(t_info *info, char **av)
 // 		info.time_to_sleep, info.nmb_of_time_eat);
 // 	while (info.node)
 // 	{
-// 		printf("thread %d | nmb_of_eat = %d\n", \
-// 			info.node->index, info.node->nmb_of_eat);
+// 		printf("thread %d | nmb_of_eat = %d | fork_statu = %d | fork_number = %d\n", \
+// 			info.node->index, info.node->nmb_of_eat, info.node->fork_statu, info.node->fork_number);
 // 		info.node = info.node->next;
 // 	}
 // }
