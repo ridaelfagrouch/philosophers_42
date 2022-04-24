@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 enum e_fork{off, on};
 
@@ -14,7 +15,6 @@ typedef struct philo_node
 	enum e_fork			fork_statu;
 	int					last_meal;
 	pthread_mutex_t		mutex;
-	pthread_mutex_t		mutex_eat;
 	int					index;
 	int					nmb_of_eat;
 	struct philo_node	*next;

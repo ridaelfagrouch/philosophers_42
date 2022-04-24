@@ -60,7 +60,8 @@ void	creat_thread(t_info *info)
 			write(2, "failed to create thread\n", 24);
 			exit(1);
 		}
-		usleep(420);
+		// pthread_detach(info->node->thread);
+		usleep(100);
 		info->node = info->node->next;
 	}
 	join_(info);
