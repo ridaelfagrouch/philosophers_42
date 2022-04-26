@@ -17,8 +17,8 @@ static void	*routine(void *info)
 	t_info	*result;
 
 	result = (t_info *)info;
-	while (1)
-		start_routine(result);
+	// while (1)
+	start_routine(result);
 	return (NULL);
 }
 
@@ -49,19 +49,36 @@ static void	initial_mutex(t_info *info)
 
 //*****************************************************************************
 
+t_info	*clone_info(t_info *info)
+{
+	t_info	*new_info;
+
+	new_info = (t_info *)malloc(sizeof(t_info));
+	new_info->heade = info->heade;
+	new_info->tail = info->tail;
+	new_info->node = info->node;
+	new_info->tmp = info->tmp;
+	new_info->i = info->i;
+	new_info->time_to_die = info->time_to_die;
+	new_info->time_to_eat = info->time_to_eat;
+	new_info->time_to_sleep = info->time_to_sleep;
+	new_info->nmb_of_time_eat = info->nmb_of_time_eat;
+	new_info->nmb_of_thread = info->nmb_of_thread;
+	return (new_info);
+}
+
 void	creat_thread(t_info *info)
 {
 	initial_mutex(info);
 	info->node = info->heade;
 	while (info->node)
 	{
-		if (pthread_create(&info->node->thread, NULL, &routine, info) != 0)
+		if (pthread_create(&info->node->thread, NULL, &routine, \
+			clone_info(info)) != 0)
 		{
 			write(2, "failed to create thread\n", 24);
 			exit(1);
 		}
-		// pthread_detach(info->node->thread);
-		usleep(100);
 		info->node = info->node->next;
 	}
 	join_(info);

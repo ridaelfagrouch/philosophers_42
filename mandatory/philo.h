@@ -11,14 +11,14 @@ enum e_fork{off, on};
 
 typedef struct philo_node
 {
-	pthread_t			thread;
-	enum e_fork			fork_statu;
-	int					last_meal;
-	pthread_mutex_t		mutex;
-	int					index;
-	int					nmb_of_eat;
 	struct philo_node	*next;
 	struct philo_node	*prev;
+	int					last_meal;
+	int					index;
+	int					nmb_of_eat;
+	pthread_t			thread;
+	enum e_fork			fork_statu;
+	pthread_mutex_t		mutex;
 }	t_node;
 
 typedef struct info
