@@ -38,7 +38,7 @@ static void	initial_data(t_info *info, char **av, int ac)
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
 	info->cont_eat = 0;
-	info->dead_statu = fols;
+	info->dead_statu = false;
 	if (ac == 6)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
 	else

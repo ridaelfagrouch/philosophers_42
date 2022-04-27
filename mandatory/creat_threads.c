@@ -80,7 +80,7 @@ void	creat_thread(t_info *info)
 	info->node = info->heade;
 	while (info->node)
 	{
-		usleep(1000);
+		usleep(1500);
 		if (pthread_create(&info->node->thread, NULL, &routine, \
 			clone_info(info)))
 		{

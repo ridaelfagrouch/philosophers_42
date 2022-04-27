@@ -8,7 +8,7 @@
 # include <sys/time.h>
 
 enum e_fork{off, on};
-enum e_dead{fols, true};
+enum e_dead{false, true};
 
 typedef struct philo_node
 {
