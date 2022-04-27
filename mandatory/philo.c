@@ -37,6 +37,8 @@ static void	initial_data(t_info *info, char **av, int ac)
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
+	info->cont_eat = 0;
+	info->dead_statu = fols;
 	if (ac == 6)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
 	else
@@ -90,20 +92,20 @@ static void	creat_list(t_info *info, char **av)
 
 //*****************************************************************************
 
-void	print_list(t_info info)
-{
-	info.node = info.heade;
-	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
- nb_of_t_eat = %d\n", \
-		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
-		info.time_to_sleep, info.nmb_of_time_eat);
-	while (info.node)
-	{
-		printf("thread %d | nmb_of_eat = %d | fork_statu = %d \n", \
-			info.node->index, info.node->nmb_of_eat, info.node->fork_statu);
-		info.node = info.node->next;
-	}
-}
+// void	print_list(t_info info)
+// {
+// 	info.node = info.heade;
+// 	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
+//  nb_of_t_eat = %d\n", \
+// 		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
+// 		info.time_to_sleep, info.nmb_of_time_eat);
+// 	while (info.node)
+// 	{
+// 		printf("thread %d | nmb_of_eat = %d | fork_statu = %d | last_meal = %d \n", \
+// 			info.node->index, info.node->nmb_of_eat, info.node->fork_statu, info.node->last_meal);
+// 		info.node = info.node->next;
+// 	}
+// }
 
 //*****************************************************************************
 
@@ -119,6 +121,7 @@ int	main(int ac, char *av[])
 	check_arg(ac, av);
 	creat_list(&info, av);
 	initial_data(&info, av, ac);
+	info.t0 = get_time();
 	creat_thread(&info);
 	// print_list(info);
 	return (0);
