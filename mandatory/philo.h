@@ -7,6 +7,15 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define TAKE_LEFT	0
+# define TAKE_RIGHT	1
+# define EAT	2
+# define DEAD	3
+# define PUT_LEFT	4
+# define PUT_RIGHT	5
+# define SLEEP	6
+# define THINK	7
+
 enum e_fork{off, on};
 enum e_dead{false, true};
 
@@ -24,19 +33,19 @@ typedef struct philo_node
 
 typedef struct info
 {
-	t_node		*heade;
-	t_node		*tail;
-	t_node		*node;
-	t_node		*tmp;
-	enum e_dead	dead_statu;
-	int			i;
-	long int	t0;
-	int			cont_eat;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nmb_of_time_eat;
-	int			nmb_of_thread;
+	t_node				*heade;
+	t_node				*tail;
+	t_node				*node;
+	t_node				*tmp;
+	enum e_dead			dead_statu;
+	int					i;
+	long int			t0;
+	int					cont_eat;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nmb_of_time_eat;
+	int					nmb_of_thread;
 }	t_info;
 
 int		ft_atoi(const char *str);
@@ -45,5 +54,6 @@ size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info);
 void	start_routine(t_info *info);
 long	get_time(void);
+void	ft_usleep(long int time);
 
 #endif

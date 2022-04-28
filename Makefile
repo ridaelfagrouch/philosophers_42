@@ -1,5 +1,6 @@
-CFILES = ./mandatory/philo.c  ./mandatory/philo_needs.c \
-  	./mandatory/atoi.c ./mandatory/check_digit.c ./mandatory/creat_threads.c
+CFILES = ./mandatory/philo.c  ./mandatory/routine.c \
+  	./mandatory/atoi.c ./mandatory/check_digit.c ./mandatory/creat_threads.c \
+	./mandatory/get_time_.c
 
 OFILES = ${CFILES:.c=.o}
 

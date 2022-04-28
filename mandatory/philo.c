@@ -92,23 +92,6 @@ static void	creat_list(t_info *info, char **av)
 
 //*****************************************************************************
 
-// void	print_list(t_info info)
-// {
-// 	info.node = info.heade;
-// 	printf("nb_of_thread = %d | t_t_die = %d | t_t_eat = %d | t_t_sleep = %d |\
-//  nb_of_t_eat = %d\n", \
-// 		info.nmb_of_thread, info.time_to_die, info.time_to_eat, \
-// 		info.time_to_sleep, info.nmb_of_time_eat);
-// 	while (info.node)
-// 	{
-// 		printf("thread %d | nmb_of_eat = %d | fork_statu = %d | last_meal = %d \n", \
-// 			info.node->index, info.node->nmb_of_eat, info.node->fork_statu, info.node->last_meal);
-// 		info.node = info.node->next;
-// 	}
-// }
-
-//*****************************************************************************
-
 int	main(int ac, char *av[])
 {
 	t_info	info;
@@ -123,6 +106,5 @@ int	main(int ac, char *av[])
 	initial_data(&info, av, ac);
 	info.t0 = get_time();
 	creat_thread(&info);
-	// print_list(info);
 	return (0);
 }

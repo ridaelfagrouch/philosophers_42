@@ -37,7 +37,7 @@ static void	initial_mutex(t_info *info)
 
 //*****************************************************************************
 
-t_info	*clone_info(t_info *info)
+static t_info	*clone_info(t_info *info)
 {
 	t_info	*new_info;
 
@@ -80,7 +80,7 @@ void	creat_thread(t_info *info)
 	info->node = info->heade;
 	while (info->node)
 	{
-		usleep(1500);
+		usleep(1000);
 		if (pthread_create(&info->node->thread, NULL, &routine, \
 			clone_info(info)))
 		{

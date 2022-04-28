@@ -12,29 +12,27 @@
 
 #include "philo.h"
 
-void	ft_usleep(long int time)
+void	print_messag(t_info *info, int key)
 {
-	long int	time_;
+	long int	time;
 
-	time_ = get_time();
-	while ((get_time() - time_) < time)
-		usleep(time);
-}
-
-//*****************************************************************************
-
-long	get_time(void)
-{
-	struct timeval	current_time;
-	long int		time_exact;
-
-	if (gettimeofday(&current_time, NULL) == -1)
-	{
-		write(2, "error! gettimeofday\n", 20);
-		exit(1);
-	}
-	time_exact = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return (time_exact);
+	time = get_time() - info->t0;
+	if (key == TAKE_LEFT)
+		printf("%ld | %d has take left fork\n", time, info->node->index);
+	else if (key == TAKE_RIGHT)
+		printf("%ld | %d has take right fork\n", time, info->node->index);
+	else if (key == PUT_LEFT)
+		printf("%ld | %d has put left fork\n", time, info->node->index);
+	else if (key == PUT_RIGHT)
+		printf("%ld | %d has put right fork\n", time, info->node->index);
+	else if (key == DEAD)
+		printf("%ld | %d dead\n", time, info->node->index);
+	else if (key == EAT)
+		printf("%ld | %d is eating\n", time, info->node->index);
+	else if (key == SLEEP)
+		printf("%ld | %d is sleeping\n", time, info->node->index);
+	else if (key == THINK)
+		printf("%ld | %d is think\n", time, info->node->index);
 }
 
 //*****************************************************************************
@@ -42,11 +40,9 @@ long	get_time(void)
 void	take_forks(t_info *info)
 {
 	pthread_mutex_lock(&info->node->mutex);
+	print_messag(info, TAKE_LEFT);
 	pthread_mutex_lock(&info->tmp->mutex);
-	printf("%ld philosopher %d has take left fork\n", \
-		(get_time() - info->t0), info->node->index);
-	printf("%ld philosopher %d has take right fork\n", \
-		(get_time() - info->t0), info->node->index);
+	print_messag(info, TAKE_RIGHT);
 	info->node->fork_statu = on;
 	info->tmp->fork_statu = on;
 }
@@ -55,36 +51,39 @@ void	take_forks(t_info *info)
 
 void	put_forks(t_info *info)
 {
-	printf("%ld philosopher %d has put left fork\n", \
-		(get_time() - info->t0), info->node->index);
+	print_messag(info, PUT_LEFT);
 	info->node->fork_statu = off;
-	printf("%ld philosopher %d has put right fork\n", \
-		(get_time() - info->t0), info->node->index);
+	print_messag(info, PUT_RIGHT);
 	info->tmp->fork_statu = off;
+}
+
+//*****************************************************************************
+
+void	check_node(t_info *info)
+{
+	if (info->dead_statu == true || info->nmb_of_thread == 1)
+	{
+		print_messag(info, DEAD);
+		exit(1);
+	}
+	if (info->node == info->heade)
+		info->tmp = info->tail;
+	else
+		info->tmp = info->node->prev;
 }
 
 //*****************************************************************************
 
 void	start_routine(t_info *info)
 {
-	if (info->node == info->heade)
-		info->tmp = info->tail;
-	else
-		info->tmp = info->node->prev;
+	check_node(info);
 	if (info->tmp->fork_statu == off && info->node->fork_statu == off)
 	{
-		if (info->dead_statu == true)
-		{
-			printf("%ld philosopher %d dead\n", \
-				(get_time() - info->t0), info->node->index);
-			exit(1);
-		}
 		take_forks(info);
 		if ((get_time() - info->node->last_meal) > info->time_to_die && \
 			(info->node->nmb_of_eat != 0))
 			info->dead_statu = true;
-		printf("%ld philosopher %d is eating\n", \
-			(get_time() - info->t0), info->node->index);
+		print_messag(info, EAT);
 		ft_usleep(info->time_to_eat);
 		info->node->last_meal = get_time();
 		info->node->nmb_of_eat++;
@@ -96,11 +95,9 @@ void	start_routine(t_info *info)
 			exit(1);
 		}
 		put_forks(info);
-		printf("%ld philosopher %d is sleeping\n", \
-			(get_time() - info->t0), info->node->index);
+		print_messag(info, SLEEP);
 		ft_usleep(info->time_to_sleep);
-		printf("%ld philosopher %d is think\n", \
-			(get_time() - info->t0), info->node->index);
+		print_messag(info, THINK);
 		pthread_mutex_unlock(&info->node->mutex);
 		pthread_mutex_unlock(&info->tmp->mutex);
 	}
