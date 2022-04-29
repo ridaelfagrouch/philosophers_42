@@ -12,34 +12,7 @@
 
 #include "philo.h"
 
-void	print_messag(t_info *info, int key)
-{
-	long int	time;
-
-	time = get_time() - info->t0;
-	pthread_mutex_lock(&info->print_mutex);
-	if (key == TAKE_LEFT)
-		printf("%ld | %d has take left fork\n", time, info->node->index);
-	else if (key == TAKE_RIGHT)
-		printf("%ld | %d has take right fork\n", time, info->node->index);
-	else if (key == PUT_LEFT)
-		printf("%ld | %d has put left fork\n", time, info->node->index);
-	else if (key == PUT_RIGHT)
-		printf("%ld | %d has put right fork\n", time, info->node->index);
-	else if (key == DEAD)
-		printf("%ld | %d dead\n", time, info->node->index);
-	else if (key == SLEEP)
-		printf("%ld | %d is sleeping\n", time, info->node->index);
-	else if (key == THINK)
-		printf("%ld | %d is think\n", time, info->node->index);
-	else if (key == EAT)
-		printf("%ld | %d is eating\n", time, info->node->index);
-	pthread_mutex_unlock(&info->print_mutex);
-}
-
-//*****************************************************************************
-
-void	take_forks(t_info *info)
+static void	take_forks(t_info *info)
 {
 	if (info->node->index % 2 == 0)
 	{
@@ -60,7 +33,7 @@ void	take_forks(t_info *info)
 
 //*****************************************************************************
 
-void	put_forks(t_info *info)
+static void	put_forks(t_info *info)
 {
 	print_messag(info, PUT_LEFT);
 	pthread_mutex_unlock(&info->node->mutex);
@@ -70,7 +43,7 @@ void	put_forks(t_info *info)
 
 //*****************************************************************************
 
-void	check_node(t_info *info)
+static void	check_node(t_info *info)
 {
 	if (info->node == info->heade)
 		info->tmp = info->tail;
@@ -80,7 +53,7 @@ void	check_node(t_info *info)
 
 //*****************************************************************************
 
-void	start_routine(t_info *info)
+static void	start_routine(t_info *info)
 {
 	if (info->dead_statu == true || info->nmb_of_thread == 1)
 	{
@@ -102,4 +75,20 @@ void	start_routine(t_info *info)
 	print_messag(info, THINK);
 	print_messag(info, SLEEP);
 	ft_usleep(info->time_to_sleep * 1000);
+}
+
+//*****************************************************************************
+
+void	*routine(void *info)
+{
+	t_info	*result;
+
+	result = (t_info *)info;
+	while (1)
+	{
+		start_routine(result);
+		if (result->node->nmb_of_eat == result->nmb_of_time_eat)
+			break ;
+	}
+	return (NULL);
 }

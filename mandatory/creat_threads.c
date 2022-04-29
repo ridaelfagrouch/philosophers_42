@@ -12,21 +12,6 @@
 
 #include "philo.h"
 
-static void	*routine(void *info)
-{
-	t_info	*result;
-
-	result = (t_info *)info;
-	while (1)
-	{
-		start_routine(result);
-		if (result->node->nmb_of_eat == result->nmb_of_time_eat)
-			break ;
-	}
-	return (NULL);
-}
-
-//*****************************************************************************
 
 static void	initial_mutex(t_info *info)
 {

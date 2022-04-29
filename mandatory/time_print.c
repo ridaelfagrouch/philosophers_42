@@ -36,3 +36,30 @@ long	get_time(void)
 	time_exact = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (time_exact);
 }
+
+//*****************************************************************************
+
+void	print_messag(t_info *info, int key)
+{
+	long int	time;
+
+	time = get_time() - info->t0;
+	pthread_mutex_lock(&info->print_mutex);
+	if (key == TAKE_LEFT)
+		printf("%ld | %d has take left fork\n", time, info->node->index);
+	else if (key == TAKE_RIGHT)
+		printf("%ld | %d has take right fork\n", time, info->node->index);
+	else if (key == PUT_LEFT)
+		printf("%ld | %d has put left fork\n", time, info->node->index);
+	else if (key == PUT_RIGHT)
+		printf("%ld | %d has put right fork\n", time, info->node->index);
+	else if (key == DEAD)
+		printf("%ld | %d dead\n", time, info->node->index);
+	else if (key == SLEEP)
+		printf("%ld | %d is sleeping\n", time, info->node->index);
+	else if (key == THINK)
+		printf("%ld | %d is think\n", time, info->node->index);
+	else if (key == EAT)
+		printf("%ld | %d is eating\n", time, info->node->index);
+	pthread_mutex_unlock(&info->print_mutex);
+}

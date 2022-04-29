@@ -51,8 +51,9 @@ int		ft_atoi(const char *str);
 void	check_is_digit(char *str);
 size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info);
-void	start_routine(t_info *info);
 long	get_time(void);
 void	ft_usleep(long int time);
+void	*routine(void *info);
+void	print_messag(t_info *info, int key);
 
 #endif
