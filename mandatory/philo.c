@@ -37,7 +37,6 @@ static void	initial_data(t_info *info, char **av, int ac)
 	info->time_to_die = ft_atoi(av[2]);
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
-	info->cont_eat = 0;
 	info->dead_statu = false;
 	if (ac == 6)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
@@ -59,7 +58,6 @@ void	first_node_data(t_info *info)
 	info->node->next = NULL;
 	info->node->prev = NULL;
 	info->node->index = info->i;
-	info->node->fork_statu = off;
 	info->node->last_meal = 0;
 	info->heade = info->node;
 	info->tmp = info->heade;
@@ -81,7 +79,6 @@ static void	creat_list(t_info *info, char **av)
 			info->node->prev = info->tmp;
 			info->node->next = NULL;
 			info->node->index = info->i;
-			info->node->fork_statu = off;
 			info->node->last_meal = 0;
 			info->tmp = info->tmp->next;
 		}

@@ -16,7 +16,6 @@
 # define SLEEP	6
 # define THINK	7
 
-enum e_fork{off, on};
 enum e_dead{false, true};
 
 typedef struct philo_node
@@ -27,7 +26,6 @@ typedef struct philo_node
 	int					index;
 	int					nmb_of_eat;
 	pthread_t			thread;
-	enum e_fork			fork_statu;
 	pthread_mutex_t		mutex;
 }	t_node;
 
@@ -38,9 +36,10 @@ typedef struct info
 	t_node				*node;
 	t_node				*tmp;
 	enum e_dead			dead_statu;
-	int					i;
+	pthread_mutex_t		eat_mutex;
+	pthread_mutex_t		print_mutex;
 	long int			t0;
-	int					cont_eat;
+	int					i;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;

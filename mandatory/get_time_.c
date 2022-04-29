@@ -12,13 +12,13 @@
 
 #include "philo.h"
 
-void	ft_usleep(long int time)
+void	ft_usleep(long int time_us)
 {
 	long int	time_;
 
 	time_ = get_time();
-	while ((get_time() - time_) < time)
-		usleep(time);
+	while ((get_time() - time_) < (time_us / 1000))
+		usleep(time_us / 10);
 }
 
 //*****************************************************************************
