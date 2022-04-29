@@ -12,7 +12,6 @@
 
 #include "philo.h"
 
-
 static void	initial_mutex(t_info *info)
 {
 	info->node = info->heade;
