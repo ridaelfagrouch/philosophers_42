@@ -14,14 +14,8 @@
 
 void	ft_usleep(long int time_us, t_info *info)
 {
-	long int	time_;
-
 	if (info->dead_statu == false)
-	{
-		time_ = get_time();
-		while ((get_time() - time_) < (time_us / 1000))
-			usleep(time_us / 10);
-	}
+		usleep(time_us);
 }
 
 //*****************************************************************************
@@ -64,6 +58,8 @@ void	print_messag(t_info *info, t_node *node, int key)
 			printf("%ld ms| %d is think\n", time, node->index);
 		else if (key == EAT)
 			printf("%ld ms| %d is eating\n", time, node->index);
+		else if (key == DEAD)
+			printf("%ld ms| %d is dead\n", time, node->index);
 	}
 	pthread_mutex_unlock(&info->print_mutex);
 }

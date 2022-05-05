@@ -46,26 +46,10 @@ static void	initial_data(t_info *info, char **av, int ac)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
 	else
 		info->nmb_of_time_eat = -1;
-	creatlist(info);
 }
 
 //*****************************************************************************
 
-// void	print_list(t_info *info)
-// {
-// 	printf("dead_stat : %d | t0 : %ld | cont : %d | t_to_die : %d | \
-// t_to_eat : %d | t_to_sleep : %d | nmb_of_eat : %d | nmb_of_philo : %d \n", \
-// 		info->dead_statu, info->t0, info->cont, info->time_to_die, info->time_to_eat, \
-// 		info->time_to_sleep, info->nmb_of_time_eat, info->nmb_of_thread);
-// 	while (info->head)
-// 	{
-// 		printf("lst_meal : %ld | index : %d | nmb_of_eat : %d\n", \
-// 			info->head->last_meal, info->head->index, info->head->nmb_of_eat);
-// 		if (info->head->next == info->tmp)
-// 			break ;
-// 		info->head = info->head->next;
-// 	}
-// }
 
 int	main(int ac, char *av[])
 {
@@ -78,6 +62,7 @@ int	main(int ac, char *av[])
 	}
 	check_arg(ac, av);
 	initial_data(&info, av, ac);
+	creatlist(&info);
 	creat_thread(&info);
 	check_dead(&info);
 	detach_thread(&info);

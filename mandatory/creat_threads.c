@@ -16,7 +16,6 @@ void	check_dead(t_info *info)
 {
 	int long	time_check;
 
-	info->head = info->head->next;
 	while (info->head)
 	{
 		time_check = get_time() - info->head->last_meal;
