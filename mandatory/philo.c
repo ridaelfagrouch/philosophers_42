@@ -77,7 +77,10 @@ int	main(int ac, char *av[])
 	creatlist(&info);
 	creat_thread(&info, &exit_);
 	if (exit_ == erreur_)
+	{
+		detach_thread(&info);
 		return (0);
+	}
 	check_dead(&info);
 	detach_thread(&info);
 	return (0);

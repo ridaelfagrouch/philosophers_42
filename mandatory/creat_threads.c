@@ -43,7 +43,9 @@ void	detach_thread(t_info *info)
 	{
 		pthread_detach(info->head->thread);
 		pthread_mutex_destroy(&info->head->fork);
+		info->tmp = info->head;
 		info->head = info->head->next;
+		free(info->tmp);
 		i++;
 	}
 	pthread_mutex_destroy(&info->print_mutex);
