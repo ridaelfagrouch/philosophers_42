@@ -29,6 +29,7 @@
 # define THINK	7
 
 enum e_dead{false, true};
+enum e_erreur{erreur_, no_erreur_};
 
 typedef struct philo_node
 {
@@ -56,10 +57,10 @@ typedef struct s_info
 	int					nmb_of_thread;
 }	t_info;
 
-int		ft_atoi(const char *str);
-void	check_is_digit(char *str);
+int		ft_atoi(const char *str, enum e_erreur *exit_);
+void	check_is_digit(char *str, enum e_erreur *exit_);
 size_t	ft_strlen(const char *str);
-void	creat_thread(t_info *info);
+void	creat_thread(t_info *info, enum e_erreur *exit_);
 long	get_time(void);
 void	ft_usleep(long int time, t_info *info);
 void	*routine(void *info);

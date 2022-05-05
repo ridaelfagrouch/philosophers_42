@@ -23,7 +23,7 @@ static void	wite_space(const char *str, long int *i)
 	}
 }
 
-static int	len_str(const char *str)
+static int	len_str(const char *str, enum e_erreur *exit_)
 {
 	int	len;
 
@@ -31,7 +31,8 @@ static int	len_str(const char *str)
 	if (ft_strlen(str) == 1 && (str[0] == '-' || str[0] == '+'))
 	{
 		write(2, "error: invalid arg!!\n", 21);
-		exit (1);
+		*exit_ = erreur_;
+		return (0);
 	}
 	if (str[0] == '-' || str[0] == '+')
 		str++;
@@ -45,21 +46,25 @@ static int	len_str(const char *str)
 		return (0);
 }
 
-static void	error_(int sign, long int k, const char *str)
+static void	error_(int sign, long int k, const char *str, enum e_erreur *exit_)
 {
 	if ((sign * k) > 2147483647 || (sign * k) < -2147483648)
 	{
 		write(2, "error: invalid arg!!\n", 21);
-		exit (1);
+		*exit_ = erreur_;
+		return ;
 	}
-	if (len_str(str))
+	if (len_str(str, exit_))
 	{
 		write(2, "error: invalid nember!!\n", 24);
-		exit (1);
+		*exit_ = erreur_;
+		return ;
 	}
+	if (*exit_ == erreur_)
+		return ;
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, enum e_erreur *exit_)
 {
 	char		*src;
 	int			sign;
@@ -82,6 +87,8 @@ int	ft_atoi(const char *str)
 		k = k * 10 + src[i] - '0';
 		i++;
 	}
-	error_(sign, k, str);
+	error_(sign, k, str, exit_);
+	if (*exit_ == erreur_)
+		return (0);
 	return (sign * k);
 }
