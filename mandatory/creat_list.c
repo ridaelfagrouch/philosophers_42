@@ -20,7 +20,7 @@ static t_node	*new_node(int index, t_info *info)
 	if (!node)
 		return (NULL);
 	if (pthread_mutex_init(&node->fork, NULL))
-		exit(1);
+		return (NULL);
 	node->index = index;
 	node->last_meal = 0;
 	node->nmb_of_eat = 0;
