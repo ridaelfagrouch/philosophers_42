@@ -38,56 +38,34 @@ static void	initial_data(t_info *info, char **av, int ac)
 	info->time_to_eat = ft_atoi(av[3]);
 	info->time_to_sleep = ft_atoi(av[4]);
 	info->dead_statu = false;
+	info->cont = 0;
+	info->t0 = get_time();
+	if (pthread_mutex_init(&info->print_mutex, NULL))
+		exit(1);
 	if (ac == 6)
 		info->nmb_of_time_eat = ft_atoi(av[5]);
 	else
-		info->nmb_of_time_eat = 0;
-	info->tmp = info->heade;
-	info->i = 0;
-	while (info->tmp)
-	{
-		info->tmp->nmb_of_eat = 0;
-		info->tmp = info->tmp->next;
-	}
+		info->nmb_of_time_eat = -1;
+	creatlist(info);
 }
 
 //*****************************************************************************
 
-void	first_node_data(t_info *info)
-{
-	info->node->next = NULL;
-	info->node->prev = NULL;
-	info->node->index = info->i;
-	info->node->last_meal = 0;
-	info->heade = info->node;
-	info->tmp = info->heade;
-}
-
-static void	creat_list(t_info *info, char **av)
-{
-	info->i = 0;
-	while (info->i < ft_atoi(av[1]))
-	{
-		info->node = (t_node *)malloc(sizeof(t_node));
-		if (!info->node)
-			exit(1);
-		if (info->i == 0)
-			first_node_data(info);
-		else
-		{
-			info->tmp->next = info->node;
-			info->node->prev = info->tmp;
-			info->node->next = NULL;
-			info->node->index = info->i;
-			info->node->last_meal = 0;
-			info->tmp = info->tmp->next;
-		}
-		info->i++;
-	}
-	info->tail = info->node;
-}
-
-//*****************************************************************************
+// void	print_list(t_info *info)
+// {
+// 	printf("dead_stat : %d | t0 : %ld | cont : %d | t_to_die : %d | \
+// t_to_eat : %d | t_to_sleep : %d | nmb_of_eat : %d | nmb_of_philo : %d \n", \
+// 		info->dead_statu, info->t0, info->cont, info->time_to_die, info->time_to_eat, \
+// 		info->time_to_sleep, info->nmb_of_time_eat, info->nmb_of_thread);
+// 	while (info->head)
+// 	{
+// 		printf("lst_meal : %ld | index : %d | nmb_of_eat : %d\n", \
+// 			info->head->last_meal, info->head->index, info->head->nmb_of_eat);
+// 		if (info->head->next == info->tmp)
+// 			break ;
+// 		info->head = info->head->next;
+// 	}
+// }
 
 int	main(int ac, char *av[])
 {
@@ -99,9 +77,9 @@ int	main(int ac, char *av[])
 		exit(1);
 	}
 	check_arg(ac, av);
-	creat_list(&info, av);
 	initial_data(&info, av, ac);
-	info.t0 = get_time();
 	creat_thread(&info);
+	check_dead(&info);
+	detach_thread(&info);
 	return (0);
 }

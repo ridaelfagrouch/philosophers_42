@@ -12,13 +12,16 @@
 
 #include "philo.h"
 
-void	ft_usleep(long int time_us)
+void	ft_usleep(long int time_us, t_info *info)
 {
 	long int	time_;
 
-	time_ = get_time();
-	while ((get_time() - time_) < (time_us / 1000))
-		usleep(time_us / 10);
+	if (info->dead_statu == false)
+	{
+		time_ = get_time();
+		while ((get_time() - time_) < (time_us / 1000))
+			usleep(time_us / 10);
+	}
 }
 
 //*****************************************************************************
@@ -39,27 +42,28 @@ long	get_time(void)
 
 //*****************************************************************************
 
-void	print_messag(t_info *info, int key)
+void	print_messag(t_info *info, t_node *node, int key)
 {
 	long int	time;
 
-	time = get_time() - info->t0;
 	pthread_mutex_lock(&info->print_mutex);
-	if (key == TAKE_LEFT)
-		printf("%ld | %d has take left fork\n", time, info->node->index);
-	else if (key == TAKE_RIGHT)
-		printf("%ld | %d has take right fork\n", time, info->node->index);
-	else if (key == PUT_LEFT)
-		printf("%ld | %d has put left fork\n", time, info->node->index);
-	else if (key == PUT_RIGHT)
-		printf("%ld | %d has put right fork\n", time, info->node->index);
-	else if (key == DEAD)
-		printf("%ld | %d dead\n", time, info->node->index);
-	else if (key == SLEEP)
-		printf("%ld | %d is sleeping\n", time, info->node->index);
-	else if (key == THINK)
-		printf("%ld | %d is think\n", time, info->node->index);
-	else if (key == EAT)
-		printf("%ld | %d is eating\n", time, info->node->index);
+	if (info->dead_statu == false)
+	{
+		time = get_time() - info->t0;
+		if (key == TAKE_LEFT)
+			printf("%ld ms| %d has take left fork\n", time, node->index);
+		else if (key == TAKE_RIGHT)
+			printf("%ld ms| %d has take right fork\n", time, node->index);
+		else if (key == PUT_LEFT)
+			printf("%ld ms| %d has put left fork\n", time, node->index);
+		else if (key == PUT_RIGHT)
+			printf("%ld ms| %d has put right fork\n", time, node->index);
+		else if (key == SLEEP)
+			printf("%ld ms| %d is sleeping\n", time, node->index);
+		else if (key == THINK)
+			printf("%ld ms| %d is think\n", time, node->index);
+		else if (key == EAT)
+			printf("%ld ms| %d is eating\n", time, node->index);
+	}
 	pthread_mutex_unlock(&info->print_mutex);
 }

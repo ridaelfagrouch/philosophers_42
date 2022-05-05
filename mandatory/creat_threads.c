@@ -12,75 +12,59 @@
 
 #include "philo.h"
 
-static void	initial_mutex(t_info *info)
+void	check_dead(t_info *info)
 {
-	info->node = info->heade;
-	while (info->node)
+	int long	time_check;
+
+	info->head = info->head->next;
+	while (info->head)
 	{
-		if (pthread_mutex_init(&info->node->mutex, NULL))
-			exit(1);
-		info->node = info->node->next;
+		time_check = get_time() - info->head->last_meal;
+		if (time_check > info->time_to_die || \
+			info->cont == info->nmb_of_thread)
+		{
+			if (time_check > info->time_to_die)
+				print_messag(info, info->head, DEAD);
+			info->dead_statu = true;
+			return ;
+		}
+		usleep(1000);
+		info->head = info->head->next;
 	}
-	if (pthread_mutex_init(&info->eat_mutex, NULL))
-		exit(1);
-	if (pthread_mutex_init(&info->print_mutex, NULL))
-		exit(1);
 }
 
 //*****************************************************************************
 
-static t_info	*clone_info(t_info *info)
+void	detach_thread(t_info *info)
 {
-	t_info	*new_info;
+	int	i;
 
-	new_info = (t_info *)malloc(sizeof(t_info));
-	if (!new_info)
-		exit(1);
-	new_info->heade = info->heade;
-	new_info->tail = info->tail;
-	new_info->node = info->node;
-	new_info->tmp = info->tmp;
-	new_info->i = info->i;
-	new_info->t0 = info->t0;
-	new_info->time_to_die = info->time_to_die;
-	new_info->time_to_eat = info->time_to_eat;
-	new_info->time_to_sleep = info->time_to_sleep;
-	new_info->nmb_of_time_eat = info->nmb_of_time_eat;
-	new_info->nmb_of_thread = info->nmb_of_thread;
-	new_info->eat_mutex = info->eat_mutex;
-	new_info->print_mutex = info->print_mutex;
-	new_info->dead_statu = info->dead_statu;
-	return (new_info);
-}
-
-//*****************************************************************************
-
-static void	join_(t_info *info)
-{
-	info->node = info->heade;
-	while (info->node)
+	i = 0;
+	while (i < info->nmb_of_thread)
 	{
-		if (pthread_join(info->node->thread, NULL))
-			exit(1);
-		info->node = info->node->next;
+		pthread_detach(info->head->thread);
+		pthread_mutex_destroy(&info->head->fork);
+		info->head = info->head->next;
+		i++;
 	}
+	pthread_mutex_destroy(&info->print_mutex);
+	return ;
 }
 
 //*****************************************************************************
 
 void	creat_thread(t_info *info)
 {
-	initial_mutex(info);
-	info->node = info->heade;
-	while (info->node)
+	while (info->head)
 	{
-		if (pthread_create(&info->node->thread, NULL, &routine, \
-			clone_info(info)))
+		if (pthread_create(&info->head->thread, NULL, &routine, info->head))
 		{
 			write(2, "failed to create thread\n", 24);
 			exit(1);
 		}
-		info->node = info->node->next;
+		info->head->last_meal = get_time();
+		if (info->head->next == info->tmp)
+			break ;
+		info->head = info->head->next;
 	}
-	join_(info);
 }
