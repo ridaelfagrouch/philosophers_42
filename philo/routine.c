@@ -34,8 +34,8 @@ static void	start_routine(t_info *info, t_node *node)
 {
 	take_forks(info, node);
 	print_messag(info, node, EAT);
-	node->last_meal = get_time();
 	ft_usleep(info->time_to_eat * 1000, info);
+	node->last_meal = get_time();
 	node->nmb_of_eat++;
 	if (node->nmb_of_eat == info->nmb_of_time_eat)
 		info->cont++;
