@@ -27,7 +27,7 @@ void	check_dead(t_info *info)
 			info->dead_statu = true;
 			return ;
 		}
-		usleep(1000);
+		usleep(500);
 		info->head = info->head->next;
 	}
 }
