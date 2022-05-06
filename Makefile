@@ -1,13 +1,13 @@
-CFILES = ./mandatory/philo.c  ./mandatory/routine.c \
-  	./mandatory/atoi.c ./mandatory/check_digit.c ./mandatory/creat_threads.c \
-	./mandatory/time_print.c ./mandatory/creat_list.c
+CFILES = ./philo/philo.c  ./philo/routine.c \
+  	./philo/atoi.c ./philo/check_digit.c ./philo/creat_threads.c \
+	./philo/time_print.c ./philo/creat_list.c
 
 OFILES = ${CFILES:.c=.o}
 
 CC = gcc
 W = -Wall -Werror -Wextra
-INC = ./mandatory/philo.h
-NAME = philo
+INC = ./philo/philo.h
+NAME = philosopher
 
 YELLOW=\033[1;33m
 NC=\033[0m
@@ -16,6 +16,13 @@ RED=\033[0;31m
 DARKVIOLET=\033[1;5;1;36m
 
 define HEADER_M
+
+	██████╗ ██╗  ██╗██╗██╗      ██████╗ ███████╗ ██████╗ ██████╗ ██╗  ██╗███████╗██████╗ 
+	██╔══██╗██║  ██║██║██║     ██╔═══██╗██╔════╝██╔═══██╗██╔══██╗██║  ██║██╔════╝██╔══██╗
+	██████╔╝███████║██║██║     ██║   ██║███████╗██║   ██║██████╔╝███████║█████╗  ██████╔╝
+	██╔═══╝ ██╔══██║██║██║     ██║   ██║╚════██║██║   ██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗
+	██║     ██║  ██║██║███████╗╚██████╔╝███████║╚██████╔╝██║     ██║  ██║███████╗██║  ██║
+	╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝${YELLOW}by rel-fagr${NC}
 
 endef
 export HEADER_M
@@ -36,7 +43,7 @@ print_header_m:
 	@echo "${GREEN}$@ created ✅${NC}"
 
 clean:
-	@rm -f ./mandatory/*.o
+	@rm -f ./philo/*.o
 
 fclean : clean
 	@rm -f ${NAME}

@@ -91,3 +91,19 @@ with the philosopher number and timestamp_in_ms the current timestamp in millise
 will print its death.
 
 * Again, philosophers should avoid to die!
+
+## Compiling and running
+---
+
+* **for mandatory part** :
+
+Run <mark>make</mark>.
+
+![img](assets/philo_header.png)
+
+```bash
+$ make
+$ ./philosopher [number_of_philosopher (int)] [time_to_die (int)] [time_to_eat (int)] [time_to_sleep (int)] [number_of_times_each_philo_must_eat(optional arg)(int)]
+```
+
+* **for bonus part** :
