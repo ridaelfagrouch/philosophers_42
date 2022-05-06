@@ -54,14 +54,14 @@ void	detach_thread(t_info *info)
 
 //*****************************************************************************
 
-void	creat_thread(t_info *info, enum e_erreur *exit_)
+void	creat_thread(t_info *info, enum e_erreur *isexit)
 {
 	while (info->head)
 	{
 		if (pthread_create(&info->head->thread, NULL, &routine, info->head))
 		{
 			write(2, "failed to create thread\n", 24);
-			*exit_ = erreur_;
+			*isexit = yes;
 			return ;
 		}
 		info->head->last_meal = get_time();

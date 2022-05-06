@@ -29,7 +29,7 @@
 # define THINK	7
 
 enum e_dead{false, true};
-enum e_erreur{erreur_, no_erreur_};
+enum e_erreur{no, yes};
 
 typedef struct philo_node
 {
@@ -66,7 +66,7 @@ void	ft_usleep(long int time, t_info *info);
 void	*routine(void *info);
 void	print_messag(t_info *info, t_node *node, int key);
 void	detach_thread(t_info *info);
-void	creatlist(t_info *info);
+void	creatlist(t_info *info, enum e_erreur *isexit);
 void	check_dead(t_info *info);
 
 #endif
