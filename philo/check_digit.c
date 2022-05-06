@@ -33,7 +33,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-void	check_is_digit(char *str, enum e_erreur *isexit)
+void	check_is_digit(char *str, t_erreur *isexit)
 {
 	int	j;
 

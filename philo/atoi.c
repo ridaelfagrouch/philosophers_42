@@ -23,7 +23,7 @@ static void	wite_space(const char *str, long int *i)
 	}
 }
 
-static int	len_str(const char *str, enum e_erreur *isexit)
+static int	len_str(const char *str, t_erreur *isexit)
 {
 	int	len;
 
@@ -46,7 +46,7 @@ static int	len_str(const char *str, enum e_erreur *isexit)
 		return (0);
 }
 
-static void	error_(int sign, long int k, const char *str, enum e_erreur *isexit)
+static void	error_(int sign, long int k, const char *str, t_erreur *isexit)
 {
 	if ((sign * k) > 2147483647 || (sign * k) < -2147483648)
 	{
@@ -64,7 +64,7 @@ static void	error_(int sign, long int k, const char *str, enum e_erreur *isexit)
 		return ;
 }
 
-int	ft_atoi(const char *str, enum e_erreur *isexit)
+int	ft_atoi(const char *str, t_erreur *isexit)
 {
 	char		*src;
 	int			sign;

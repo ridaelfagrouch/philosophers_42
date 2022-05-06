@@ -48,10 +48,6 @@ void	print_messag(t_info *info, t_node *node, int key)
 			printf("%ld ms| %d has take left fork\n", time, node->index);
 		else if (key == TAKE_RIGHT)
 			printf("%ld ms| %d has take right fork\n", time, node->index);
-		else if (key == PUT_LEFT)
-			printf("%ld ms| %d has put left fork\n", time, node->index);
-		else if (key == PUT_RIGHT)
-			printf("%ld ms| %d has put right fork\n", time, node->index);
 		else if (key == SLEEP)
 			printf("%ld ms| %d is sleeping\n", time, node->index);
 		else if (key == THINK)

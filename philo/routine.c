@@ -22,12 +22,10 @@ static void	take_forks(t_info *info, t_node *node)
 
 //*****************************************************************************
 
-static void	put_forks(t_info *info, t_node *node)
+static void	put_forks(t_node *node)
 {
 	pthread_mutex_unlock(&node->fork);
-	print_messag(info, node, PUT_LEFT);
 	pthread_mutex_unlock(&node->next->fork);
-	print_messag(info, node, PUT_RIGHT);
 }
 
 //*****************************************************************************
@@ -41,10 +39,10 @@ static void	start_routine(t_info *info, t_node *node)
 	node->nmb_of_eat++;
 	if (node->nmb_of_eat == info->nmb_of_time_eat)
 		info->cont++;
-	put_forks(info, node);
-	print_messag(info, node, THINK);
+	put_forks(node);
 	print_messag(info, node, SLEEP);
 	ft_usleep(info->time_to_sleep * 1000, info);
+	print_messag(info, node, THINK);
 }
 
 //*****************************************************************************

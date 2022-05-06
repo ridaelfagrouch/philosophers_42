@@ -54,7 +54,7 @@ void	detach_thread(t_info *info)
 
 //*****************************************************************************
 
-void	creat_thread(t_info *info, enum e_erreur *isexit)
+void	creat_thread(t_info *info, t_erreur *isexit)
 {
 	while (info->head)
 	{

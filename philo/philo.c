@@ -28,7 +28,7 @@ void	free_list(t_info *info)
 
 //*****************************************************************************
 
-static void	check_arg(int ac, char **av, enum e_erreur *isexit)
+static void	check_arg(int ac, char **av, t_erreur *isexit)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ static void	check_arg(int ac, char **av, enum e_erreur *isexit)
 
 //*****************************************************************************
 
-static void	initial_data(t_info *info, char **av, int ac, enum e_erreur *isexit)
+static void	initial_data(t_info *info, char **av, int ac, t_erreur *isexit)
 {
 	info->nmb_of_thread = ft_atoi(av[1], isexit);
 	info->time_to_die = ft_atoi(av[2], isexit);
@@ -73,7 +73,7 @@ static void	initial_data(t_info *info, char **av, int ac, enum e_erreur *isexit)
 
 //*****************************************************************************
 
-void	check_init_creat(int ac, char **av, t_info *info, enum e_erreur *isexit)
+static void	check_init_creat(int ac, char **av, t_info *info, t_erreur *isexit)
 {
 	check_arg(ac, av, isexit);
 	if (*isexit == yes)
@@ -94,7 +94,7 @@ void	check_init_creat(int ac, char **av, t_info *info, enum e_erreur *isexit)
 int	main(int ac, char *av[])
 {
 	t_info			info;
-	enum e_erreur	isexit;
+	t_erreur		isexit;
 
 	isexit = no;
 	if (ac > 6 || ac < 5)

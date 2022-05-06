@@ -23,13 +23,11 @@
 # define TAKE_RIGHT	1
 # define EAT	2
 # define DEAD	3
-# define PUT_LEFT	4
-# define PUT_RIGHT	5
 # define SLEEP	6
 # define THINK	7
 
-enum e_dead{false, true};
-enum e_erreur{no, yes};
+typedef enum dead{false, true}	t_dead;
+typedef enum erreur{no, yes}	t_erreur;
 
 typedef struct philo_node
 {
@@ -46,7 +44,7 @@ typedef struct s_info
 {
 	t_node				*head;
 	t_node				*tmp;
-	enum e_dead			dead_statu;
+	t_dead				dead_statu;
 	pthread_mutex_t		print_mutex;
 	long int			t0;
 	int					cont;
@@ -57,16 +55,16 @@ typedef struct s_info
 	int					nmb_of_thread;
 }	t_info;
 
-int		ft_atoi(const char *str, enum e_erreur *exit_);
-void	check_is_digit(char *str, enum e_erreur *exit_);
+int		ft_atoi(const char *str, t_erreur *exit_);
+void	check_is_digit(char *str, t_erreur *exit_);
 size_t	ft_strlen(const char *str);
-void	creat_thread(t_info *info, enum e_erreur *exit_);
+void	creat_thread(t_info *info, t_erreur *exit_);
 long	get_time(void);
 void	ft_usleep(long int time, t_info *info);
 void	*routine(void *info);
 void	print_messag(t_info *info, t_node *node, int key);
 void	detach_thread(t_info *info);
-void	creatlist(t_info *info, enum e_erreur *isexit);
+void	creatlist(t_info *info, t_erreur *isexit);
 void	check_dead(t_info *info);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static t_node	*new_node(int index, t_info *info, enum e_erreur *isexit)
+static t_node	*new_node(int index, t_info *info, t_erreur *isexit)
 {
 	t_node	*node;
 
@@ -58,7 +58,7 @@ static void	add_back(t_node **lst, t_node *node)
 
 //*****************************************************************************
 
-void	creatlist(t_info *info, enum e_erreur *isexit)
+void	creatlist(t_info *info, t_erreur *isexit)
 {
 	int	i;
 
