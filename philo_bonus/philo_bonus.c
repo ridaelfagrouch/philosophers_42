@@ -60,7 +60,6 @@ static void	initial_data(t_info *info, char **av, int ac, t_erreur *isexit)
 	info->time_to_sleep = ft_atoi(av[4], isexit);
 	info->dead_statu = false;
 	info->cont = 0;
-	info->t0 = get_time();
 	if (pthread_mutex_init(&info->print_mutex, NULL))
 		*isexit = yes;
 	if (ac == 6)
@@ -105,13 +104,5 @@ int	main(int ac, char *av[])
 	check_init_creat(ac, av, &info, &isexit);
 	if (isexit == yes)
 		return (0);
-	// creat_thread(&info, &isexit);
-	// if (isexit == yes)
-	// {
-	// 	detach_thread(&info);
-	// 	return (0);
-	// }
-	// check_dead(&info);
-	// detach_thread(&info);
 	return (0);
 }

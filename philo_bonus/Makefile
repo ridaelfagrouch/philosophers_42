@@ -1,11 +1,10 @@
-CFILES = philo_bonus.c  routine.c \
-  	atoi.c check_digit.c creat_threads.c \
-	time_print.c creat_list.c
+CFILES = philo_bonus.c atoi.c check_digit.c \
+	creat_list.c
 
 OFILES = ${CFILES:.c=.o}
 
 CC = gcc
-W = -Wall -Werror -Wextra
+W = -Wall -Werror -Wextra -pthread
 INC = philo_bonus.h
 NAME = philosopher
 
