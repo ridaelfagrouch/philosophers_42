@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rel-fagr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/08 15:15:28 by rel-fagr          #+#    #+#             */
-/*   Updated: 2022/05/08 15:15:54 by rel-fagr         ###   ########.fr       */
+/*   Created: 2022/05/07 17:01:33 by rel-fagr          #+#    #+#             */
+/*   Updated: 2022/05/07 17:01:41 by rel-fagr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	ft_usleep(long int time_us, t_info *info)
 {

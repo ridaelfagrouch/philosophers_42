@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rel-fagr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/29 18:06:51 by rel-fagr          #+#    #+#             */
-/*   Updated: 2022/04/29 18:06:54 by rel-fagr         ###   ########.fr       */
+/*   Created: 2022/05/07 17:00:44 by rel-fagr          #+#    #+#             */
+/*   Updated: 2022/05/07 17:00:49 by rel-fagr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -59,7 +59,7 @@ int		ft_atoi(const char *str, t_erreur *exit_);
 void	check_is_digit(char *str, t_erreur *exit_);
 size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info, t_erreur *exit_);
-long	get_time();
+long	get_time(void);
 void	ft_usleep(long int time, t_info *info);
 void	*routine(void *info);
 void	print_messag(t_info *info, t_node *node, int key);
