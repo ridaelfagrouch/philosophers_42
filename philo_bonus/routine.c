@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rel-fagr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 17:01:06 by rel-fagr          #+#    #+#             */
-/*   Updated: 2022/05/07 17:01:12 by rel-fagr         ###   ########.fr       */
+/*   Created: 2022/05/09 17:45:22 by rel-fagr          #+#    #+#             */
+/*   Updated: 2022/05/09 17:45:27 by rel-fagr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	put_forks(t_node *node)
 
 //*****************************************************************************
 
-static void	start_routine(t_info *info, t_node *node)
+void	routine(t_info *info, t_node *node)
 {
 	take_forks(info, node);
 	print_messag(info, node, EAT);
@@ -43,20 +43,4 @@ static void	start_routine(t_info *info, t_node *node)
 	print_messag(info, node, SLEEP);
 	ft_usleep(info->time_to_sleep * 1000, info);
 	print_messag(info, node, THINK);
-}
-
-//*****************************************************************************
-
-void	*routine(void *info)
-{
-	t_node		*node;
-	t_info		*result;
-
-	node = (t_node *)info;
-	result = node->share;
-	if (node->index % 2)
-		usleep(100);
-	while (result->dead_statu == false)
-		start_routine(result, node);
-	return (NULL);
 }

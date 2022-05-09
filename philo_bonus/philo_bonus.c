@@ -104,5 +104,8 @@ int	main(int ac, char *av[])
 	check_init_creat(ac, av, &info, &isexit);
 	if (isexit == yes)
 		return (0);
+	info.isexit = isexit;
+	info.t0 = get_time();
+	processing(&info);
 	return (0);
 }

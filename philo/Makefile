@@ -5,7 +5,7 @@ CFILES = philo.c  routine.c \
 OFILES = ${CFILES:.c=.o}
 
 CC = gcc
-W = -Wall -Werror -Wextra
+W = -Wall -Werror -Wextra -pthread
 INC = philo.h
 NAME = philosopher
 

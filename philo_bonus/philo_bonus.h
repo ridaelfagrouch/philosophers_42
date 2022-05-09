@@ -18,6 +18,10 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <semaphore.h>
 
 # define TAKE_LEFT	0
 # define TAKE_RIGHT	1
@@ -32,6 +36,7 @@ typedef enum erreur{no, yes}	t_erreur;
 typedef struct philo_node
 {
 	struct philo_node	*next;
+	pid_t				philo;
 	long int			last_meal;
 	int					index;
 	int					nmb_of_eat;
@@ -47,6 +52,7 @@ typedef struct s_info
 	t_dead				dead_statu;
 	pthread_mutex_t		print_mutex;
 	long int			t0;
+	t_erreur			isexit;
 	int					cont;
 	int					time_to_die;
 	int					time_to_eat;
@@ -58,13 +64,12 @@ typedef struct s_info
 int		ft_atoi(const char *str, t_erreur *exit_);
 void	check_is_digit(char *str, t_erreur *exit_);
 size_t	ft_strlen(const char *str);
-void	creat_thread(t_info *info, t_erreur *exit_);
 long	get_time(void);
-void	ft_usleep(long int time, t_info *info);
-void	*routine(void *info);
-void	print_messag(t_info *info, t_node *node, int key);
-void	detach_thread(t_info *info);
 void	creatlist(t_info *info, t_erreur *isexit);
-void	check_dead(t_info *info);
+void	processing(t_info *info);
+void	print_messag(t_info *info, t_node *node, int key);
+long	get_time(void);
+void	ft_usleep(long int time_us, t_info *info);
+void	routine(t_info *info, t_node *node);
 
 #endif
