@@ -1,5 +1,5 @@
 CFILES = philo_bonus.c atoi.c check_digit.c \
-	creat_list.c processing.c
+	creat_list.c processing.c routine.c time_print.c
 
 OFILES = ${CFILES:.c=.o}
 

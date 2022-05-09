@@ -60,8 +60,6 @@ static void	initial_data(t_info *info, char **av, int ac, t_erreur *isexit)
 	info->time_to_sleep = ft_atoi(av[4], isexit);
 	info->dead_statu = false;
 	info->cont = 0;
-	if (pthread_mutex_init(&info->print_mutex, NULL))
-		*isexit = yes;
 	if (ac == 6)
 		info->nmb_of_time_eat = ft_atoi(av[5], isexit);
 	else

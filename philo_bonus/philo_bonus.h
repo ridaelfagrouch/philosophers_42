@@ -40,8 +40,6 @@ typedef struct philo_node
 	long int			last_meal;
 	int					index;
 	int					nmb_of_eat;
-	pthread_t			thread;
-	pthread_mutex_t		fork;
 	struct s_info		*share;
 }	t_node;
 
@@ -50,7 +48,8 @@ typedef struct s_info
 	t_node				*head;
 	t_node				*tmp;
 	t_dead				dead_statu;
-	pthread_mutex_t		print_mutex;
+	sem_t				*print_sem;
+	sem_t				*forks;
 	long int			t0;
 	t_erreur			isexit;
 	int					cont;

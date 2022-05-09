@@ -40,7 +40,7 @@ void	print_messag(t_info *info, t_node *node, int key)
 {
 	long int	time;
 
-	pthread_mutex_lock(&info->print_mutex);
+	sem_wait(info->print_sem);
 	if (info->dead_statu == false)
 	{
 		time = get_time() - info->t0;
@@ -57,5 +57,5 @@ void	print_messag(t_info *info, t_node *node, int key)
 		else if (key == DEAD)
 			printf("%ld ms| %d is dead\n", time, node->index);
 	}
-	pthread_mutex_unlock(&info->print_mutex);
+	sem_post(info->print_sem);
 }

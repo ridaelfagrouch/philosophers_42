@@ -14,18 +14,18 @@
 
 static void	take_forks(t_info *info, t_node *node)
 {
-	pthread_mutex_lock(&node->fork);
+	sem_wait(info->forks);
 	print_messag(info, node, TAKE_LEFT);
-	pthread_mutex_lock(&node->next->fork);
+	sem_wait(info->forks);
 	print_messag(info, node, TAKE_RIGHT);
 }
 
 //*****************************************************************************
 
-static void	put_forks(t_node *node)
+static void	put_forks(t_info *info)
 {
-	pthread_mutex_unlock(&node->fork);
-	pthread_mutex_unlock(&node->next->fork);
+	sem_post(info->forks);
+	sem_post(info->forks);
 }
 
 //*****************************************************************************
@@ -39,7 +39,7 @@ void	routine(t_info *info, t_node *node)
 	node->nmb_of_eat++;
 	if (node->nmb_of_eat == info->nmb_of_time_eat)
 		info->cont++;
-	put_forks(node);
+	put_forks(info);
 	print_messag(info, node, SLEEP);
 	ft_usleep(info->time_to_sleep * 1000, info);
 	print_messag(info, node, THINK);

@@ -22,11 +22,6 @@ static t_node	*new_node(int index, t_info *info, t_erreur *isexit)
 		*isexit = yes;
 		return (NULL);
 	}
-	if (pthread_mutex_init(&node->fork, NULL))
-	{
-		*isexit = yes;
-		return (NULL);
-	}
 	node->index = index;
 	node->last_meal = 0;
 	node->nmb_of_eat = 0;

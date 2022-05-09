@@ -46,9 +46,10 @@ void	*check_dead(void *info)
 void	start_routine(t_info *info)
 {
 	t_node		*node;
+	pthread_t	checkdead;
 
 	node = (t_node *)info->head;
-	if (pthread_create(&info->head->thread, NULL, &check_dead, node))
+	if (pthread_create(&checkdead, NULL, &check_dead, node))
 	{
 		write(2, "failed to create thread\n", 24);
 		exit(1);
@@ -57,6 +58,7 @@ void	start_routine(t_info *info)
 		usleep(100);
 	while (info->dead_statu == false)
 		routine(info, node);
+	pthread_detach(checkdead);
 }
 
 //*****************************************************************************
