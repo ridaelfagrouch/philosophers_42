@@ -64,6 +64,10 @@ static void	initial_data(t_info *info, char **av, int ac, t_erreur *isexit)
 		info->nmb_of_time_eat = ft_atoi(av[5], isexit);
 	else
 		info->nmb_of_time_eat = -1;
+	sem_unlink("forks");
+	sem_unlink("print_sem");
+	info->forks = sem_open("forks", O_CREAT, 0644, info->nmb_of_thread);
+	info->print_sem = sem_open("print_sem", O_CREAT, 0644, 1);
 	if (*isexit == yes)
 		return ;
 }
