@@ -1,4 +1,4 @@
-CFILES = philo.c  routine.c \
+CFILES = main.c  routine.c \
   	atoi.c check_digit.c creat_threads.c \
 	time_print.c creat_list.c
 
@@ -7,7 +7,7 @@ OFILES = ${CFILES:.c=.o}
 CC = gcc
 W = -Wall -Werror -Wextra -pthread
 INC = philo.h
-NAME = philosopher
+NAME = philo
 
 YELLOW=\033[1;33m
 NC=\033[0m
