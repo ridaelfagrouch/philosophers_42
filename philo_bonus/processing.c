@@ -16,24 +16,26 @@ void	*check_dead(void *info)
 {
 	int long	time_check;
 	t_node		*node;
-	t_info		*share;
+	long int	time;
 
 	node = (t_node *) info;
-	share = node->share;
 	while (1)
 	{
 		time_check = get_time() - node->last_meal;
-		if (time_check > share->time_to_die || \
-			share->cont == share->nmb_of_thread)
+		if (time_check > node->share->time_to_die || \
+			node->share->cont == node->share->nmb_of_thread)
 		{
-			if (time_check > share->time_to_die)
-				print_messag(info, share->head, DEAD);
-			share->dead_statu = true;
+			if (time_check > node->share->time_to_die)
+			{
+				time = get_time() - node->share->t0;
+				printf("%ld ms| %d is dead\n", time, node->index);
+				sem_wait(node->share->print_sem);
+			}
+			node->share->dead_statu = true;
 			exit(1);
 		}
-		if (node->nmb_of_eat == share->nmb_of_time_eat)
-			share->cont++;
-		usleep(100);
+		if (node->nmb_of_eat == node->share->nmb_of_time_eat)
+			node->share->cont++;
 	}
 	return (0);
 }
@@ -59,13 +61,13 @@ void	ft_kill_process(t_info *info)
 void	_exit_process(t_info *info)
 {
 	int	i;
-	int	exit_status;
+	int	exit_statu;
 
 	i = 0;
 	while (i < info->nmb_of_thread)
 	{
-		waitpid(-1, &exit_status, 0);
-		if (exit_status != 0)
+		waitpid(-1, &exit_statu, 0);
+		if (exit_statu != 0)
 		{
 			ft_kill_process(info);
 			break ;
@@ -75,6 +77,7 @@ void	_exit_process(t_info *info)
 	sem_close(info->print_sem);
 	sem_unlink("forks");
 	sem_unlink("print_sem");
+	free_list(info);
 }
 
 //*****************************************************************************

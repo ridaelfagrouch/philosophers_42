@@ -54,8 +54,6 @@ void	print_messag(t_info *info, t_node *node, int key)
 			printf("%ld ms| %d is think\n", time, node->index);
 		else if (key == EAT)
 			printf("%ld ms| %d is eating\n", time, node->index);
-		else if (key == DEAD)
-			printf("%ld ms| %d is dead\n", time, node->index);
 	}
 	sem_post(info->print_sem);
 }

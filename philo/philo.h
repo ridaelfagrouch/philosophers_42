@@ -59,7 +59,7 @@ int		ft_atoi(const char *str, t_erreur *exit_);
 void	check_is_digit(char *str, t_erreur *exit_);
 size_t	ft_strlen(const char *str);
 void	creat_thread(t_info *info, t_erreur *exit_);
-long	get_time();
+long	get_time(void);
 void	ft_usleep(long int time, t_info *info);
 void	*routine(void *info);
 void	print_messag(t_info *info, t_node *node, int key);

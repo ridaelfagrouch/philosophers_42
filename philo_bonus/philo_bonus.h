@@ -70,5 +70,6 @@ void	print_messag(t_info *info, t_node *node, int key);
 long	get_time(void);
 void	ft_usleep(long int time_us, t_info *info);
 void	routine(t_info *info, t_node *node);
+void	free_list(t_info *info);
 
 #endif

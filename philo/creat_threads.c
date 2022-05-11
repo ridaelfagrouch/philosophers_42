@@ -39,7 +39,7 @@ void	detach_thread(t_info *info)
 	int	i;
 
 	i = 0;
-	while (i < info->nmb_of_thread)
+	while (i < info->nmb_of_thread || info->dead_statu == false)
 	{
 		pthread_detach(info->head->thread);
 		pthread_mutex_destroy(&info->head->fork);

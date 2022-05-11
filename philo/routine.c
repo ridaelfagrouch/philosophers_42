@@ -47,7 +47,7 @@ static void	start_routine(t_info *info, t_node *node)
 
 //*****************************************************************************
 
-void	* routine(void *info)
+void	*routine(void *info)
 {
 	t_node		*node;
 	t_info		*result;
