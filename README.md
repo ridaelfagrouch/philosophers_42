@@ -97,13 +97,18 @@ will print its death.
 
 * **for mandatory part** :
 
-Run <mark>make</mark>.
-
-![img](assets/philo_header.png)
-
 ```bash
+$ cd philo
 $ make
 $ ./philosopher [number_of_philosopher (int)] [time_to_die (int)] [time_to_eat (int)] [time_to_sleep (int)] [number_of_times_each_philo_must_eat(optional arg)(int)]
 ```
+![img](assets/philo_header.png)
 
 * **for bonus part** :
+
+```bash
+$ cd philo_bonus
+$ make
+$ ./philosopher [number_of_philosopher (int)] [time_to_die (int)] [time_to_eat (int)] [time_to_sleep (int)] [number_of_times_each_philo_must_eat(optional arg)(int)]
+```
+![img](assets/philo_bonus.png)
