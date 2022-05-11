@@ -45,17 +45,17 @@ void	print_messag(t_info *info, t_node *node, int key)
 	{
 		time = get_time() - info->t0;
 		if (key == TAKE_LEFT)
-			printf("%ld ms| %d has take left fork\n", time, node->index);
+			printf("%ld ms| %d has take left fork\n", time, node->index + 1);
 		else if (key == TAKE_RIGHT)
-			printf("%ld ms| %d has take right fork\n", time, node->index);
+			printf("%ld ms| %d has take right fork\n", time, node->index + 1);
 		else if (key == SLEEP)
-			printf("%ld ms| %d is sleeping\n", time, node->index);
+			printf("%ld ms| %d is sleeping\n", time, node->index + 1);
 		else if (key == THINK)
-			printf("%ld ms| %d is think\n", time, node->index);
+			printf("%ld ms| %d is think\n", time, node->index + 1);
 		else if (key == EAT)
-			printf("%ld ms| %d is eating\n", time, node->index);
+			printf("%ld ms| %d is eating\n", time, node->index + 1);
 		else if (key == DEAD)
-			printf("%ld ms| %d is dead\n", time, node->index);
+			printf("%ld ms| %d is dead\n", time, node->index + 1);
 	}
 	pthread_mutex_unlock(&info->print_mutex);
 }
