@@ -23,7 +23,7 @@ void	*check_dead(void *info)
 	{
 		time_check = get_time() - node->last_meal;
 		if (time_check > node->share->time_to_die || \
-			node->share->cont == node->share->nmb_of_thread)
+			(node->nmb_of_eat == node->share->nmb_of_time_eat))
 		{
 			if (time_check > node->share->time_to_die)
 			{
@@ -34,8 +34,6 @@ void	*check_dead(void *info)
 			node->share->dead_statu = true;
 			exit(1);
 		}
-		if (node->nmb_of_eat == node->share->nmb_of_time_eat)
-			node->share->cont++;
 	}
 	return (0);
 }

@@ -52,7 +52,6 @@ typedef struct s_info
 	sem_t				*forks;
 	long int			t0;
 	t_erreur			isexit;
-	int					cont;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;

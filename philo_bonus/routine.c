@@ -37,8 +37,6 @@ void	routine(t_info *info, t_node *node)
 	node->last_meal = get_time();
 	ft_usleep(info->time_to_eat * 1000, info);
 	node->nmb_of_eat++;
-	if (node->nmb_of_eat == info->nmb_of_time_eat)
-		info->cont++;
 	put_forks(info);
 	print_messag(info, node, SLEEP);
 	ft_usleep(info->time_to_sleep * 1000, info);
