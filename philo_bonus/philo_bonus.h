@@ -50,6 +50,7 @@ typedef struct s_info
 	t_dead				dead_statu;
 	sem_t				*print_sem;
 	sem_t				*forks;
+	int					cont;
 	long int			t0;
 	t_erreur			isexit;
 	int					time_to_die;
