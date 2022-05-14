@@ -25,8 +25,8 @@ void	*check_dead(void *info)
 		if (time_check > node->share->time_to_die)
 		{
 			time = get_time() - node->share->t0;
-			printf("%ld ms| %d is dead\n", time, node->index);
 			sem_wait(node->share->print_sem);
+			printf("%ld ms| %d is dead\n", time, node->index);
 			node->share->dead_statu = true;
 			exit(1);
 		}
