@@ -6,7 +6,7 @@ OFILES = ${CFILES:.c=.o}
 CC = gcc
 W = -Wall -Werror -Wextra -pthread
 INC = philo_bonus.h
-NAME = philo
+NAME = philo_bonus
 
 YELLOW=\033[1;33m
 NC=\033[0m
